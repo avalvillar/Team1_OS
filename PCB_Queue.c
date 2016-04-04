@@ -1,47 +1,110 @@
-/*
-This is the .C file that works in conjunction with the PCB_Queue.h and the
-driver PCB_Queue_test.c; Contained will be the functions listed in the header 
-file, fully implemented. 
-*/
+#include "PCB_Queue.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 
-Node FIFOq_construct() {
-	head = malloc(sizeof(Node));
-	tail = malloc(sizeof(Node));
-	tail = NULL;
-	head = tail;
-	return head;
+PCB_Queue_p PCB_Queue_construct(void) {
+	PCB_Queue_p list = malloc(sizeof(struct PCB_Queue));
+	list->first_node_ptr = NULL;
+	list->last_node_ptr = NULL;
+	list->size = 0;
+	return list;
 }
+void PCB_Queue_destruct(PCB_Queue_p theList) {
+	if (theList->size != 0) {
+		struct node* current_ptr = theList->first_node_ptr->next_node;
+		struct node* temp_ptr = theList->first_node_ptr;
 
-int FIFOq_is_empty(FIFOq) {
-	boolean isEmpty = 0;
-	if (head == NULL) {
-		empty = 1;
+		int i = 0;
+		for (i; i < theList->size; i++) {
+			if (current_ptr == NULL) { // the element is only one left
+				free(temp_ptr->value);
+				temp_ptr->value = NULL;
+			}
+			else{
+				free(temp_ptr->value);
+				temp_ptr->value = NULL;
+				temp_ptr = current_ptr; //same as dequeue
+				current_ptr = temp_ptr->next_node;
+			}
+		}
 	}
-	return isEmpty;
+	free(theList);
+	theList = NULL;
 }
-
-FIFOq_enqueue(FIFOq, Node) {
-	if (head == NULL) {
-		head = Node;
-		tail = Node;
+int PCB_Queue_is_empty(PCB_Queue_p theList) {
+	if (theList->size == 0) {
+		return 0;
 	}
 	else {
-		tail->next = Node;
-		tail = Node;
+		return 1;
+	}
+}
+void PCB_Queue_enqueue(PCB_Queue_p theList, PCB_p theValue) {
+	if (theList != NULL&& theValue != NULL ) {
+		PCB_p temp_PCB = malloc(sizeof(PCB));
+		PCB_set_pid(temp_PCB, theValue->pid);
+		PCB_set_state(temp_PCB, theValue->state);
+		PCB_set_priority(temp_PCB, theValue->priority);
+		PCB_set_pc(temp_PCB, theValue->pc);
+		
+		//create temp node
+		struct node* temp_Node = malloc(sizeof(struct node));
+		temp_Node->value = temp_PCB;
+		temp_Node->next_node = NULL;
+
+		//the first element/node of list
+		if (theList->size == 0) {
+			theList->first_node_ptr = temp_Node;
+			theList->last_node_ptr = temp_Node;
+		}
+		else {
+			theList->last_node_ptr->next_node = temp_Node;
+			theList->last_node_ptr = temp_Node;
+		}
+		theList->size++; //increment size 
+	 }
+	else {
+		printf("Error"); // either list or value was 'null'
 	}
 }
 
-PCB_p FIFOq_dequeue(FIFOq) {
-	PCB_p *temp;
-	if (FIFOq_is_empty(FIFOq)) {
-		temp = head;
+struct node* dequeue(PCB_Queue_p theList){
+	if (theList != NULL) {
+		struct node * tempNode = theList->first_node_ptr; //grab first ele
+		if (theList->size > 1) { //case more element left
+			if (tempNode->next_node != NULL) {
+				theList->first_node_ptr = tempNode->next_node;
+				theList->size--;
+			}
+			return tempNode;
+		}
+		else if (theList->size == 1) {
+			tempNode = theList->last_node_ptr;
+			theList->first_node_ptr = NULL;
+			theList->last_node_ptr = NULL;
+			theList->size = 0;
+			return tempNode;
+		}
+		else {
+			return NULL;
+		}
 	}
 	else {
-		temp = head->pcb;
-		head = head->next;
-		free(head);
+		printf("Dequeue method got pass NULL : Error");
+		return NULL;
 	}
-	return temp;
 }
 
-//FIFOq_toString(FIFOq);
+// print for check 
+void PCB_Queue_toString(PCB_Queue_p theList) {
+	if (theList->size != 0) {
+		//char string[100];
+		struct node *current_node = theList->first_node_ptr;
+		while (current_node != NULL) {
+			printf("PID: 0x%lX, Priority: 0x%X, State: %u, PC: 0x%lX \n", 
+			PCB_get_pid(current_node->value), PCB_get_priority(current_node->value), PCB_get_state(current_node->value), PCB_get_pc(current_node->value));
+			current_node = current_node->next_node;
+		}
+	}
+}
