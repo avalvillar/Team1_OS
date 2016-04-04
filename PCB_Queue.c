@@ -20,7 +20,7 @@ int FIFOq_is_empty(FIFOq) {
 	return isEmpty;
 }
 
-FIFOq_enqueue(FIFOq, Node) {
+void FIFOq_enqueue(FIFOq, Node) {
 	if (head == NULL) {
 		head = Node;
 		tail = Node;
