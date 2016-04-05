@@ -1,4 +1,4 @@
-#include "pcb.h"
+#include "PCB.h"
 #include <stdio.h>
 
 int main() {

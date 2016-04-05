@@ -1,5 +1,5 @@
 #pragma once
-#include "pcb.h"
+#include "PCB.h"
 
 typedef struct PCB_Queue * PCB_Queue_p; // queue pointer for malloc
 
@@ -18,5 +18,5 @@ PCB_Queue_p PCB_Queue_construct(void);
 void PCB_Queue_destruct(PCB_Queue_p p);
 int PCB_Queue_is_empty(PCB_Queue_p p); // 0 = isEmpty 1 = notEmpty
 void PCB_Queue_enqueue(PCB_Queue_p p, PCB_p value); //not sure void or int (for error)
-struct node * dequeue(PCB_Queue_p p);
+PCB_p PCB_Queue_dequeue(PCB_Queue_p p);
 void PCB_Queue_toString(PCB_Queue_p p);
