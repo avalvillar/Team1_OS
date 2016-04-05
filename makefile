@@ -1,6 +1,6 @@
 CFLAGS=-Wall -std=c99
 
-all: PCB_Queue_test PCB_test
+all: PCB_Queue_test PCB_test PCB_Priority_Queue.o
 
 PCB_Queue_test: PCB_Queue.o PCB.o PCB_Queue_test.o
 	gcc PCB_Queue.o PCB.o PCB_Queue_test.o -o PCB_Queue_test
