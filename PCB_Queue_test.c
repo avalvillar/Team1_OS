@@ -1,5 +1,6 @@
 #include "PCB_Queue.h"
-#include "pcb.h"
+#include "PCB.h"
+#include <stdio.h>
 
 int main() {
 	printf("\n elements \n");
@@ -10,7 +11,7 @@ int main() {
 	printf("%s\n", string);
 
 	PCB_set_pid(p1, 64);
-	PCB_set_state(p1, ready);
+	PCB_set_state(p1, PCB_STATE_READY);
 	PCB_set_priority(p1, 8);
 	PCB_set_pc(p1, 128);
 	PCB_toString(p1, string);
@@ -23,7 +24,7 @@ int main() {
 	printf("%s\n", string);
 
 	PCB_set_pid(p2, 65);
-	PCB_set_state(p2, running);
+	PCB_set_state(p2, PCB_STATE_RUNNING);
 	PCB_set_priority(p2, 7);
 	PCB_set_pc(p2, 118);
 	PCB_toString(p2, string);
@@ -37,11 +38,11 @@ int main() {
 	PCB_Queue_toString(list);	
 
 	printf("\nTest for denqueue \n");
-	struct node * tempNode = dequeue(list);
+	PCB_p pcbp = PCB_Queue_dequeue(list);
 	PCB_Queue_toString(list);	
 	
 	printf("\nTest for denqueue values \n");
-	PCB_toString(tempNode->value, string);
+	PCB_toString(pcbp, string);
 	printf("%s\n", string);
 
 	

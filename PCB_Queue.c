@@ -1,4 +1,5 @@
 #include "PCB_Queue.h"
+#include "PCB.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -14,9 +15,8 @@ void PCB_Queue_destruct(PCB_Queue_p theList) {
 	if (theList->size != 0) {
 		struct node* current_ptr = theList->first_node_ptr->next_node;
 		struct node* temp_ptr = theList->first_node_ptr;
-
-		int i = 0;
-		for (i; i < theList->size; i++) {
+		int i;
+		for (i = 0; i < theList->size; i++) {
 			if (current_ptr == NULL) { // the element is only one left
 				free(temp_ptr->value);
 				temp_ptr->value = NULL;
@@ -69,7 +69,7 @@ void PCB_Queue_enqueue(PCB_Queue_p theList, PCB_p theValue) {
 	}
 }
 
-struct node* dequeue(PCB_Queue_p theList){
+PCB_p PCB_Queue_dequeue(PCB_Queue_p theList){
 	if (theList != NULL) {
 		struct node * tempNode = theList->first_node_ptr; //grab first ele
 		if (theList->size > 1) { //case more element left
@@ -77,14 +77,18 @@ struct node* dequeue(PCB_Queue_p theList){
 				theList->first_node_ptr = tempNode->next_node;
 				theList->size--;
 			}
-			return tempNode;
+			PCB_p p = tempNode->value;
+			free(tempNode);
+			return p;
 		}
 		else if (theList->size == 1) {
 			tempNode = theList->last_node_ptr;
 			theList->first_node_ptr = NULL;
 			theList->last_node_ptr = NULL;
 			theList->size = 0;
-			return tempNode;
+			PCB_p p = tempNode->value;
+			free(tempNode);
+			return p;
 		}
 		else {
 			return NULL;
