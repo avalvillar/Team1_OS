@@ -60,9 +60,8 @@ unsigned long PCB_get_pc(PCB_p p) {
 	return p->pc;
 } 
 
-void PCB_toString(PCB_p p, char *s) {
-	if (p == NULL || s == NULL) return;
-	sprintf(s, "PID: 0x%lX, Priority: 0x%X, State: %u, PC: 0x%lX", 
+void PCB_print(PCB_p p) {
+	if (p == NULL) return;
+	printf("PID: 0x%lX, Priority: 0x%X, State: %u, PC: 0x%lX\n", 
 			PCB_get_pid(p), PCB_get_priority(p), PCB_get_state(p), PCB_get_pc(p));
-	return;
 }

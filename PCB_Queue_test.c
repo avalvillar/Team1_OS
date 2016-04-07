@@ -14,7 +14,7 @@ int main() {
 	PCB_set_state(p1, PCB_STATE_READY);
 	PCB_set_priority(p1, 8);
 	PCB_set_pc(p1, 128);
-	PCB_toString(p1, string);
+	//PCB_toString(p1, string);
 	printf("%s\n", string);
 	
 	//second p2
@@ -27,7 +27,7 @@ int main() {
 	PCB_set_state(p2, PCB_STATE_RUNNING);
 	PCB_set_priority(p2, 7);
 	PCB_set_pc(p2, 118);
-	PCB_toString(p2, string);
+	//PCB_toString(p2, string);
 	printf("%s\n", string);
 
 	PCB_Queue_p list = PCB_Queue_construct();
@@ -42,7 +42,7 @@ int main() {
 	PCB_Queue_toString(list);	
 	
 	printf("\nTest for denqueue values \n");
-	PCB_toString(pcbp, string);
+	//PCB_toString(pcbp, string);
 	printf("%s\n", string);
 
 	

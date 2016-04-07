@@ -34,10 +34,10 @@ void PCB_Queue_destruct(PCB_Queue_p theList) {
 }
 int PCB_Queue_is_empty(PCB_Queue_p theList) {
 	if (theList->size == 0) {
-		return 0;
+		return 1;
 	}
 	else {
-		return 1;
+		return 0;
 	}
 }
 void PCB_Queue_enqueue(PCB_Queue_p theList, PCB_p theValue) {

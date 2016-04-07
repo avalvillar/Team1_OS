@@ -12,3 +12,4 @@ typedef struct PCB_Priority_Queue * PCB_Priority_Queue_p;
 PCB_Priority_Queue_p PCB_Priority_Queue_construct(void);
 void PCB_Priority_Queue_enqueue(PCB_Priority_Queue_p, PCB_p);
 PCB_p PCB_Priority_Queue_dequeue(PCB_Priority_Queue_p); 
+void PCB_Priority_Queue_print(PCB_Priority_Queue_p);

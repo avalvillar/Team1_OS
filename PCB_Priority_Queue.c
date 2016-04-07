@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include "PCB_Priority_Queue.h"
 #include "PCB_Queue.h"
 #include "PCB.h"
@@ -27,4 +28,18 @@ PCB_p PCB_Priority_Queue_dequeue(PCB_Priority_Queue_p pq) {
 		i++;
 	}
 	return PCB_Queue_dequeue(pq->queues[i]);
+}
+
+void PCB_Priority_Queue_print(PCB_Priority_Queue_p pq) {
+	int i;
+	for (i = 0; i <= PCB_PRIORITY_MAX; i++) {
+		PCB_Queue_p q = pq->queues[i];
+		printf("Q%u: Count=%u: ", i, q->size);
+		struct node *n = q->first_node_ptr;
+		while (n != NULL) {
+			printf("->%X", n->value->pid);
+			n = n->next_node;
+		}
+		printf("-*\n");
+	}
 }

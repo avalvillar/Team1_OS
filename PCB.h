@@ -34,4 +34,4 @@ enum PCB_STATE_TYPE PCB_get_state(PCB_p p);
 unsigned short PCB_get_priority(PCB_p p);
 unsigned long PCB_get_pc(PCB_p p);
 
-void PCB_toString(PCB_p p, char *s);  // a string representing the contents of the pcb
+void PCB_print(PCB_p p);  // a string representing the contents of the pcb
