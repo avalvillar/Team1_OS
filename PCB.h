@@ -16,14 +16,14 @@ enum PCB_STATE_TYPE {
 };
 
 
-typedef struct pcb {
+struct PCB {
     unsigned long pid;        // process ID #, a unique number
 	enum PCB_STATE_TYPE state;    // process state (running, waiting, etc.)
 	unsigned short priority;  // priorities 0=highest, 15=lowest
 	unsigned long pc;         // holds the current pc value when preempted
-} PCB;
+};
 
-typedef PCB * PCB_p;
+typedef struct PCB * PCB_p;
 
 PCB_p PCB_construct(enum PCB_ERROR *error); // returns a pcb pointer to heap allocation
 void PCB_destruct(PCB_p p, enum PCB_ERROR *error);  // deallocates pcb from the heap

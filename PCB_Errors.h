@@ -1,3 +1,5 @@
+#pragma once
+
 enum PCB_ERROR {
 	PCB_SUCCESS = 0,
 	PCB_NULL_POINTER,
