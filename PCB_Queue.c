@@ -42,7 +42,7 @@ int PCB_Queue_is_empty(PCB_Queue_p theList, enum PCB_ERROR *error) {
 }
 void PCB_Queue_enqueue(PCB_Queue_p theList, PCB_p theValue, enum PCB_ERROR *error) {
 	if (theList != NULL&& theValue != NULL ) {
-		PCB_p temp_PCB = malloc(sizeof(PCB));
+		PCB_p temp_PCB = malloc(sizeof(struct PCB));
 		PCB_set_pid(temp_PCB, theValue->pid, error);
 		PCB_set_state(temp_PCB, theValue->state, error);
 		PCB_set_priority(temp_PCB, theValue->priority, error);
