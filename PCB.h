@@ -1,5 +1,5 @@
 #pragma once
-
+#include "PCB_Errors.h"
 #define PCB_PRIORITY_MAX 15
 
 enum PCB_STATE_TYPE {
@@ -8,10 +8,13 @@ enum PCB_STATE_TYPE {
 	PCB_STATE_RUNNING, 
 	PCB_STATE_INTERRUPTED, 
 	PCB_STATE_WAITING, 
-	PCB_STATE_HALTED, 
+	PCB_STATE_HALTED,
+	
+	PCB_STATE_ERROR, // Used as return value if null pointer is passed to getter.
 
 	PCB_STATE_LAST_ERROR // invalid type, used for bounds checking
 };
+
 
 typedef struct pcb {
     unsigned long pid;        // process ID #, a unique number
@@ -22,16 +25,16 @@ typedef struct pcb {
 
 typedef PCB * PCB_p;
 
-PCB_p PCB_construct(void); // returns a pcb pointer to heap allocation
-void PCB_destruct(PCB_p p);  // deallocates pcb from the heap
-void PCB_init(PCB_p p);       // sets default values for member data
-void PCB_set_pid(PCB_p p, unsigned long pid);
-void PCB_set_state(PCB_p p, enum PCB_STATE_TYPE state);
-void PCB_set_priority(PCB_p p, unsigned short priority);
-void PCB_set_pc(PCB_p p, unsigned long pc);
-unsigned long PCB_get_pid(PCB_p p);  // returns pid of the process
-enum PCB_STATE_TYPE PCB_get_state(PCB_p p);
-unsigned short PCB_get_priority(PCB_p p);
-unsigned long PCB_get_pc(PCB_p p);
+PCB_p PCB_construct(enum PCB_ERROR *error); // returns a pcb pointer to heap allocation
+void PCB_destruct(PCB_p p, enum PCB_ERROR *error);  // deallocates pcb from the heap
+void PCB_init(PCB_p p, enum PCB_ERROR* error);       // sets default values for member data
+void PCB_set_pid(PCB_p p, unsigned long pid, enum PCB_ERROR  *error);///////
+void PCB_set_state(PCB_p p, enum PCB_STATE_TYPE state, enum PCB_ERROR  *error);
+void PCB_set_priority(PCB_p p, unsigned short priority, enum PCB_ERROR *error);
+void PCB_set_pc(PCB_p p, unsigned long pc, enum PCB_ERROR *error);
+unsigned long PCB_get_pid(PCB_p p, enum PCB_ERROR *error);  // returns pid of the process
+enum PCB_STATE_TYPE PCB_get_state(PCB_p p, enum PCB_ERROR *error);
+unsigned short PCB_get_priority(PCB_p p, enum PCB_ERROR *error);
+unsigned long PCB_get_pc(PCB_p p, enum PCB_ERROR *error);
 
-void PCB_toString(PCB_p p, char *s);  // a string representing the contents of the pcb
+void PCB_toString(PCB_p p, char *s, enum PCB_ERROR *error);  // a string representing the contents of the pcb
