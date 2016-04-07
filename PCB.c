@@ -110,13 +110,12 @@ unsigned long PCB_get_pc(PCB_p p, enum PCB_ERROR *error) {
 	return p->pc;
 } 
 
-void PCB_toString(PCB_p p, char *s, enum PCB_ERROR *error) {
-	if (p == NULL || s == NULL) {
+void PCB_print(PCB_p p, enum PCB_ERROR *error) {
+	if (p == NULL) {
 		*error = PCB_NULL_POINTER;
 		return;
 	}
-	sprintf(s, "PID: 0x%lX, Priority: 0x%X, State: %u, PC: 0x%lX", 
-			PCB_get_pid(p, PCB_SUCCESS), PCB_get_priority(p, PCB_SUCCESS),
-			PCB_get_state(p, PCB_SUCCESS), PCB_get_pc(p, PCB_SUCCESS));
-	return;
+	printf("PID: 0x%lX, Priority: 0x%X, State: %u, PC: 0x%lX\n", 
+			PCB_get_pid(p, error), PCB_get_priority(p, error),
+			PCB_get_state(p, error), PCB_get_pc(p, error));
 }

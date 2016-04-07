@@ -2,21 +2,19 @@
 #include <stdio.h>
 
 int main() {
-	
-	PCB_p p = PCB_construct(PCB_SUCCESS);
-	PCB_init(p, PCB_SUCCESS);
-	char string[100];
-	PCB_toString(p, string, PCB_SUCCESS);
-	printf("%s\n", string);
+	enum PCB_ERROR error = PCB_SUCCESS;
+	PCB_p p = PCB_construct(&error);
+	PCB_init(p, &error);
+	PCB_print(p, &error);
 
-	PCB_set_pid(p, 64, PCB_SUCCESS);
-	PCB_set_state(p, PCB_STATE_READY, PCB_SUCCESS);
-	PCB_set_priority(p, 8, PCB_SUCCESS);
-	PCB_set_pc(p, 128, PCB_SUCCESS);
-	PCB_toString(p, string, PCB_SUCCESS);
-	printf("%s\n", string);
+	PCB_set_pid(p, 64, &error);
+	PCB_set_state(p, PCB_STATE_READY, &error);
+	PCB_set_priority(p, 8, &error);
+	PCB_set_pc(p, 128, &error);
+	PCB_print(p, &error);
 
-	PCB_destruct(p, PCB_SUCCESS);
+	PCB_destruct(p, &error);
+
 
 	return 0;
 }

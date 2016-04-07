@@ -4,14 +4,14 @@
 #include <stdio.h>
 #include <string.h>
 
-PCB_Queue_p PCB_Queue_construct(void) {
+PCB_Queue_p PCB_Queue_construct(enum PCB_ERROR *error) {
 	PCB_Queue_p list = malloc(sizeof(struct PCB_Queue));
 	list->first_node_ptr = NULL;
 	list->last_node_ptr = NULL;
 	list->size = 0;
 	return list;
 }
-void PCB_Queue_destruct(PCB_Queue_p theList) {
+void PCB_Queue_destruct(PCB_Queue_p theList, enum PCB_ERROR *error) {
 	if (theList->size != 0) {
 		struct node* current_ptr = theList->first_node_ptr->next_node;
 		struct node* temp_ptr = theList->first_node_ptr;
@@ -32,21 +32,21 @@ void PCB_Queue_destruct(PCB_Queue_p theList) {
 	free(theList);
 	theList = NULL;
 }
-int PCB_Queue_is_empty(PCB_Queue_p theList) {
+int PCB_Queue_is_empty(PCB_Queue_p theList, enum PCB_ERROR *error) {
 	if (theList->size == 0) {
-		return 0;
-	}
-	else {
 		return 1;
 	}
+	else {
+		return 0;
+	}
 }
-void PCB_Queue_enqueue(PCB_Queue_p theList, PCB_p theValue) {
+void PCB_Queue_enqueue(PCB_Queue_p theList, PCB_p theValue, enum PCB_ERROR *error) {
 	if (theList != NULL&& theValue != NULL ) {
 		PCB_p temp_PCB = malloc(sizeof(PCB));
-		PCB_set_pid(temp_PCB, theValue->pid);
-		PCB_set_state(temp_PCB, theValue->state);
-		PCB_set_priority(temp_PCB, theValue->priority);
-		PCB_set_pc(temp_PCB, theValue->pc);
+		PCB_set_pid(temp_PCB, theValue->pid, error);
+		PCB_set_state(temp_PCB, theValue->state, error);
+		PCB_set_priority(temp_PCB, theValue->priority, error);
+		PCB_set_pc(temp_PCB, theValue->pc, error);
 		
 		//create temp node
 		struct node* temp_Node = malloc(sizeof(struct node));
@@ -69,7 +69,7 @@ void PCB_Queue_enqueue(PCB_Queue_p theList, PCB_p theValue) {
 	}
 }
 
-PCB_p PCB_Queue_dequeue(PCB_Queue_p theList){
+PCB_p PCB_Queue_dequeue(PCB_Queue_p theList, enum PCB_ERROR *error) {
 	if (theList != NULL) {
 		struct node * tempNode = theList->first_node_ptr; //grab first ele
 		if (theList->size > 1) { //case more element left
@@ -101,13 +101,13 @@ PCB_p PCB_Queue_dequeue(PCB_Queue_p theList){
 }
 
 // print for check 
-void PCB_Queue_toString(PCB_Queue_p theList) {
+void PCB_Queue_print(PCB_Queue_p theList, enum PCB_ERROR *error) {
 	if (theList->size != 0) {
-		//char string[100];
 		struct node *current_node = theList->first_node_ptr;
 		while (current_node != NULL) {
 			printf("PID: 0x%lX, Priority: 0x%X, State: %u, PC: 0x%lX \n", 
-			PCB_get_pid(current_node->value), PCB_get_priority(current_node->value), PCB_get_state(current_node->value), PCB_get_pc(current_node->value));
+					PCB_get_pid(current_node->value, error), PCB_get_priority(current_node->value, error),
+					PCB_get_state(current_node->value, error), PCB_get_pc(current_node->value, error));
 			current_node = current_node->next_node;
 		}
 	}
