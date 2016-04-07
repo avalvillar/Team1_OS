@@ -14,9 +14,9 @@ struct PCB_Queue {
 	struct node * last_node_ptr;
 	int size;
 };
-PCB_Queue_p PCB_Queue_construct(void);
-void PCB_Queue_destruct(PCB_Queue_p p);
-int PCB_Queue_is_empty(PCB_Queue_p p); // 0 = isEmpty 1 = notEmpty
-void PCB_Queue_enqueue(PCB_Queue_p p, PCB_p value); //not sure void or int (for error)
-PCB_p PCB_Queue_dequeue(PCB_Queue_p p);
-void PCB_Queue_toString(PCB_Queue_p p);
+PCB_Queue_p PCB_Queue_construct(enum PCB_ERROR*);
+void PCB_Queue_destruct(PCB_Queue_p, enum PCB_ERROR*);
+int PCB_Queue_is_empty(PCB_Queue_p, enum PCB_ERROR*); // 0 = isEmpty 1 = notEmpty
+void PCB_Queue_enqueue(PCB_Queue_p, PCB_p, enum PCB_ERROR*); //not sure void or int (for error)
+PCB_p PCB_Queue_dequeue(PCB_Queue_p, enum PCB_ERROR*);
+void PCB_Queue_print(PCB_Queue_p, enum PCB_ERROR*);
