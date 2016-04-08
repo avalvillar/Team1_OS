@@ -1,5 +1,6 @@
 #include "PCB_Queue.h"
 #include "PCB.h"
+#include "PCB_Errors.h"
 #include <stdio.h>
 #include <string.h>
 
@@ -50,14 +51,14 @@ int main() {
 	PCB_Queue_enqueue(list,p1, &error);
 	//PCB_Queue_toString2(list); //new
 	strcpy(string2,"P1->");
-	printf("\nQ: Count = %d : %s\n",list->size,string2, &error);
+	printf("\nQ: Count = %d : %s\n",list->size,string2);
 	printf("contents: ");
 	PCB_print(p1, &error); //new
 
 	PCB_Queue_enqueue(list,p2, &error);
 	//PCB_Queue_toString2(list); //new
 	strcat(string2,"P2->");
-	printf("\nQ: Count = %d : %s\n",list->size,string2, &error);
+	printf("\nQ: Count = %d : %s\n",list->size,string2);
 	printf("contents: ");
 	PCB_print(p2, &error); //new
   //new

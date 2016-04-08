@@ -2,6 +2,7 @@
 
 #include "PCB_Queue.h"
 #include "PCB.h"
+#include "PCB_Errors.h"
 
 struct PCB_Priority_Queue {
 	PCB_Queue_p queues[PCB_PRIORITY_MAX + 1];

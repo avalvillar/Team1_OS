@@ -1,6 +1,7 @@
 #include "PCB_Priority_Queue.h"
 #include "PCB_Queue.h"
 #include "PCB.h"
+#include "PCB_Errors.h"
 #include <stdio.h>
 #include <stdlib.h>
 

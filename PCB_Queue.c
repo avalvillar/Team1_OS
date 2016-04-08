@@ -1,5 +1,6 @@
 #include "PCB_Queue.h"
 #include "PCB.h"
+#include "PCB_Errors.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -37,24 +38,13 @@ void PCB_Queue_destruct(PCB_Queue_p theList, enum PCB_ERROR *error) {
 	theList = NULL;
 }
 int PCB_Queue_is_empty(PCB_Queue_p theList, enum PCB_ERROR *error) {
-	if (theList->size == 0) {
-		return 1;
-	}
-	else {
-		return 0;
-	}
+	return theList->size == 0;
 }
 void PCB_Queue_enqueue(PCB_Queue_p theList, PCB_p theValue, enum PCB_ERROR *error) {
 	if (theList != NULL&& theValue != NULL ) {
-		PCB_p temp_PCB = malloc(sizeof(struct PCB));
-		PCB_set_pid(temp_PCB, theValue->pid, error);
-		PCB_set_state(temp_PCB, theValue->state, error);
-		PCB_set_priority(temp_PCB, theValue->priority, error);
-		PCB_set_pc(temp_PCB, theValue->pc, error);
-		
 		//create temp node
 		struct node* temp_Node = malloc(sizeof(struct node));
-		temp_Node->value = temp_PCB;
+		temp_Node->value = theValue;
 		temp_Node->next_node = NULL;
 
 		//the first element/node of list

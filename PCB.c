@@ -1,4 +1,5 @@
 #include "PCB.h"
+#include "PCB_Errors.h"
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -12,10 +13,6 @@ PCB_p PCB_construct(enum PCB_ERROR *error) {
 }
 
 void PCB_destruct(PCB_p p, enum PCB_ERROR *error) {
-	if (p == NULL) {
-		*error = PCB_NULL_POINTER; //Unsure if even needed. 
-		return;
-	}
 	free(p);
 }
 
@@ -24,19 +21,15 @@ void PCB_init(PCB_p p, enum PCB_ERROR *error) {
 		*error = PCB_NULL_POINTER;
 		return;
 	}
-	PCB_set_pid(p, 0, PCB_SUCCESS);
-	PCB_set_state(p, PCB_STATE_NEW, PCB_SUCCESS);
-	PCB_set_priority(p, PCB_PRIORITY_MAX, PCB_SUCCESS);
-	PCB_set_pc(p, 0, PCB_SUCCESS);
+	PCB_set_pid(p, 0, error);
+	PCB_set_state(p, PCB_STATE_NEW, error);
+	PCB_set_priority(p, PCB_PRIORITY_MAX, error);
+	PCB_set_pc(p, 0, error);
 }
 
 void PCB_set_pid(PCB_p p, unsigned long pid, enum PCB_ERROR *error) {
 	if (p == NULL) {
 		*error = PCB_NULL_POINTER;
-		return;
-	}
-	if (pid < 0) {
-		*error = PCB_INVALID_ARG;
 		return;
 	}
 	p->pid = pid;
@@ -59,7 +52,7 @@ void PCB_set_priority(PCB_p p, unsigned short priority, enum PCB_ERROR *error) {
 		*error = PCB_NULL_POINTER;
 		return;
 	}
-	if (priority > PCB_PRIORITY_MAX || priority < 0) {
+	if (priority > PCB_PRIORITY_MAX) {
 		*error = PCB_INVALID_ARG;
 		return;
 	}
@@ -69,10 +62,6 @@ void PCB_set_priority(PCB_p p, unsigned short priority, enum PCB_ERROR *error) {
 void PCB_set_pc(PCB_p p, unsigned long pc, enum PCB_ERROR *error) {
 	if (p == NULL) {
 		*error = PCB_NULL_POINTER;
-		return;
-	}
-	if (pc < 0) {
-		*error = PCB_INVALID_ARG;
 		return;
 	}
 	p->pc = pc;
