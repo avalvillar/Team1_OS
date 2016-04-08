@@ -6,6 +6,10 @@
 
 PCB_Queue_p PCB_Queue_construct(enum PCB_ERROR *error) {
 	PCB_Queue_p list = malloc(sizeof(struct PCB_Queue));
+	if (list == NULL) {
+		*error = PCB_MEM_ALLOC_FAIL;
+		return NULL;
+	}
 	list->first_node_ptr = NULL;
 	list->last_node_ptr = NULL;
 	list->size = 0;
