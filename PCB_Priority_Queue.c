@@ -6,7 +6,10 @@
 
 PCB_Priority_Queue_p PCB_Priority_Queue_construct(enum PCB_ERROR *error) {
 	PCB_Priority_Queue_p pq = malloc(sizeof(struct PCB_Priority_Queue));
-	if (pq == NULL) return NULL;
+	if (pq == NULL) {
+		*error = PCB_NULL_POINTER;
+		return NULL;
+	}
 	int i;
 	for (i = 0; i <= PCB_PRIORITY_MAX; i++) {
 		pq->queues[i] = PCB_Queue_construct(error);
@@ -15,13 +18,19 @@ PCB_Priority_Queue_p PCB_Priority_Queue_construct(enum PCB_ERROR *error) {
 }
 
 void PCB_Priority_Queue_enqueue(PCB_Priority_Queue_p pq, PCB_p pcb, enum PCB_ERROR *error) {
-	if (pq == NULL || pcb == NULL) return;
+	if (pq == NULL || pcb == NULL) {
+		*error = PCB_NULL_POINTER;
+		return;
+	}
 	PCB_Queue_p queue = pq->queues[PCB_get_priority(pcb, error)];
 	PCB_Queue_enqueue(queue, pcb, error);
 }
 
 PCB_p PCB_Priority_Queue_dequeue(PCB_Priority_Queue_p pq, enum PCB_ERROR *error) {
-	if (pq == NULL) return NULL;
+	if (pq == NULL) {
+		*error = PCB_NULL_POINTER;
+		return NULL;
+	}
 	int i = 0;
 	while (PCB_Queue_is_empty(pq->queues[i], error)) {
 		if (i > PCB_PRIORITY_MAX) return NULL;
@@ -37,7 +46,7 @@ void PCB_Priority_Queue_print(PCB_Priority_Queue_p pq, enum PCB_ERROR *error) {
 		printf("Q%u: Count=%u: ", i, q->size);
 		struct node *n = q->first_node_ptr;
 		while (n != NULL) {
-			printf("->%X", n->value->pid);
+			printf("->%lu", n->value->pid);
 			n = n->next_node;
 		}
 		printf("-*\n");

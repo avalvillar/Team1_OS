@@ -9,9 +9,9 @@ int main() {
 	printf("\nPCB_Priority_Queue_test:\n\n");
 	PCB_Priority_Queue_p pq = PCB_Priority_Queue_construct(&error);
 	int i;
-	for (i = 0; i < 10; i++) {
+	for (i = 0; i < 5; i++) {//// changed from (i<10) to (i<5) for to fit command window.
 		int j;
-		for (j = 0; j < 10; j++) {
+		for (j = 0; j < 10; j++) { 
 			PCB_p pcbp = PCB_construct(&error);
 			PCB_init(pcbp, &error);
 			PCB_set_priority(pcbp, rand() % (PCB_PRIORITY_MAX + 1), &error);
