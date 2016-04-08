@@ -34,10 +34,10 @@ void PCB_Queue_destruct(PCB_Queue_p theList) {
 }
 int PCB_Queue_is_empty(PCB_Queue_p theList) {
 	if (theList->size == 0) {
-		return 0;
+		return 1;
 	}
 	else {
-		return 1;
+		return 0;
 	}
 }
 void PCB_Queue_enqueue(PCB_Queue_p theList, PCB_p theValue) {
@@ -98,6 +98,18 @@ PCB_p PCB_Queue_dequeue(PCB_Queue_p theList){
 		printf("Dequeue method got pass NULL : Error");
 		return NULL;
 	}
+}
+
+void PCB_Queue_toString2(PCB_Queue_p theList){
+	int temp_size = theList->size;
+	if (theList->size != 0) {
+		printf("\nQ: Count = %d ", theList->size);
+	}
+	int i = 0;
+	for (i = 1; i <= temp_size; i++ ){
+		printf("P%d ->" ,i);
+	}
+	printf("\n");
 }
 
 // print for check 
