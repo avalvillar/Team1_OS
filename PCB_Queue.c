@@ -42,15 +42,9 @@ int PCB_Queue_is_empty(PCB_Queue_p theList, enum PCB_ERROR *error) {
 }
 void PCB_Queue_enqueue(PCB_Queue_p theList, PCB_p theValue, enum PCB_ERROR *error) {
 	if (theList != NULL&& theValue != NULL ) {
-		PCB_p temp_PCB = malloc(sizeof(struct PCB));
-		PCB_set_pid(temp_PCB, theValue->pid, error);
-		PCB_set_state(temp_PCB, theValue->state, error);
-		PCB_set_priority(temp_PCB, theValue->priority, error);
-		PCB_set_pc(temp_PCB, theValue->pc, error);
-		
 		//create temp node
 		struct node* temp_Node = malloc(sizeof(struct node));
-		temp_Node->value = temp_PCB;
+		temp_Node->value = theValue;
 		temp_Node->next_node = NULL;
 
 		//the first element/node of list

@@ -15,6 +15,7 @@ struct PCB_Queue {
 	struct node * last_node_ptr;
 	int size;
 };
+
 PCB_Queue_p PCB_Queue_construct(enum PCB_ERROR*);
 void PCB_Queue_destruct(PCB_Queue_p, enum PCB_ERROR*);
 int PCB_Queue_is_empty(PCB_Queue_p, enum PCB_ERROR*);
