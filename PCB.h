@@ -1,4 +1,5 @@
 #pragma once
+
 #include "PCB_Errors.h"
 #define PCB_PRIORITY_MAX 15
 
@@ -9,12 +10,11 @@ enum PCB_STATE_TYPE {
 	PCB_STATE_INTERRUPTED, 
 	PCB_STATE_WAITING, 
 	PCB_STATE_HALTED,
-	
-	PCB_STATE_ERROR, // Used as return value if null pointer is passed to getter.
 
-	PCB_STATE_LAST_ERROR // invalid type, used for bounds checking
+	PCB_STATE_LAST_ERROR, // invalid type, used for bounds checking
+
+	PCB_STATE_ERROR // Used as return value if null pointer is passed to getter.
 };
-
 
 struct PCB {
     unsigned long pid;        // process ID #, a unique number
@@ -25,18 +25,17 @@ struct PCB {
 
 typedef struct PCB * PCB_p;
 
-PCB_p PCB_construct(enum PCB_ERROR *error); // returns a pcb pointer to heap allocation
-void PCB_destruct(PCB_p p, enum PCB_ERROR *error);  // deallocates pcb from the heap
-void PCB_init(PCB_p p, enum PCB_ERROR* error);       // sets default values for member data
-void PCB_set_pid(PCB_p p, unsigned long pid, enum PCB_ERROR  *error);///////
-void PCB_set_state(PCB_p p, enum PCB_STATE_TYPE state, enum PCB_ERROR  *error);
-void PCB_set_priority(PCB_p p, unsigned short priority, enum PCB_ERROR *error);
-void PCB_set_pc(PCB_p p, unsigned long pc, enum PCB_ERROR *error);
-unsigned long PCB_get_pid(PCB_p p, enum PCB_ERROR *error);  // returns pid of the process
-enum PCB_STATE_TYPE PCB_get_state(PCB_p p, enum PCB_ERROR *error);
-unsigned short PCB_get_priority(PCB_p p, enum PCB_ERROR *error);
-unsigned long PCB_get_pc(PCB_p p, enum PCB_ERROR *error);
+PCB_p PCB_construct(enum PCB_ERROR*); // returns a pcb pointer to heap allocation
+void PCB_destruct(PCB_p, enum PCB_ERROR*);  // deallocates pcb from the heap
+void PCB_init(PCB_p, enum PCB_ERROR*);       // sets default values for member data
+void PCB_set_pid(PCB_p, unsigned long, enum PCB_ERROR*);///////
+void PCB_set_state(PCB_p, enum PCB_STATE_TYPE, enum PCB_ERROR*);
+void PCB_set_priority(PCB_p, unsigned short, enum PCB_ERROR*);
+void PCB_set_pc(PCB_p, unsigned long, enum PCB_ERROR*);
+unsigned long PCB_get_pid(PCB_p, enum PCB_ERROR*);  // returns pid of the process
+enum PCB_STATE_TYPE PCB_get_state(PCB_p, enum PCB_ERROR*);
+unsigned short PCB_get_priority(PCB_p, enum PCB_ERROR*);
+unsigned long PCB_get_pc(PCB_p, enum PCB_ERROR*);
 
-
-void PCB_print(PCB_p p, enum PCB_ERROR *error);  // a string representing the contents of the pcb
+void PCB_print(PCB_p, enum PCB_ERROR*);  // a string representing the contents of the pcb
 

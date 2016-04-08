@@ -1,5 +1,6 @@
 #include "PCB_Queue.h"
 #include "PCB.h"
+#include "PCB_Errors.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -37,12 +38,7 @@ void PCB_Queue_destruct(PCB_Queue_p theList, enum PCB_ERROR *error) {
 	theList = NULL;
 }
 int PCB_Queue_is_empty(PCB_Queue_p theList, enum PCB_ERROR *error) {
-	if (theList->size == 0) {
-		return 1;
-	}
-	else {
-		return 0;
-	}
+	return theList->size == 0;
 }
 void PCB_Queue_enqueue(PCB_Queue_p theList, PCB_p theValue, enum PCB_ERROR *error) {
 	if (theList != NULL&& theValue != NULL ) {
