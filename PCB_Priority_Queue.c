@@ -7,12 +7,16 @@
 PCB_Priority_Queue_p PCB_Priority_Queue_construct(enum PCB_ERROR *error) {
 	PCB_Priority_Queue_p pq = malloc(sizeof(struct PCB_Priority_Queue));
 	if (pq == NULL) {
-		*error = PCB_NULL_POINTER;
+		*error = PCB_MEM_ALLOC_FAIL;
 		return NULL;
 	}
 	int i;
 	for (i = 0; i <= PCB_PRIORITY_MAX; i++) {
 		pq->queues[i] = PCB_Queue_construct(error);
+		if (pq->queues[i] == NULL) {
+			*error = PCB_MEM_ALLOC_FAIL;
+			return NULL;
+		}
 	}
 	return pq;
 }
@@ -33,7 +37,10 @@ PCB_p PCB_Priority_Queue_dequeue(PCB_Priority_Queue_p pq, enum PCB_ERROR *error)
 	}
 	int i = 0;
 	while (PCB_Queue_is_empty(pq->queues[i], error)) {
-		if (i > PCB_PRIORITY_MAX) return NULL;
+		if (i > PCB_PRIORITY_MAX) {
+			*error = PCB_INVALID_ARG;
+			return NULL;
+		}
 		i++;
 	}
 	return PCB_Queue_dequeue(pq->queues[i], error);

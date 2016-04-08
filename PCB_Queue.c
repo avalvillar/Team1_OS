@@ -106,13 +106,13 @@ PCB_p PCB_Queue_dequeue(PCB_Queue_p theList, enum PCB_ERROR *error) {
 
 // print for check 
 void PCB_Queue_print(PCB_Queue_p theList, enum PCB_ERROR *error) {
+	int temp_size = theList->size;
 	if (theList->size != 0) {
-		struct node *current_node = theList->first_node_ptr;
-		while (current_node != NULL) {
-			printf("PID: 0x%lX, Priority: 0x%X, State: %u, PC: 0x%lX \n", 
-					PCB_get_pid(current_node->value, error), PCB_get_priority(current_node->value, error),
-					PCB_get_state(current_node->value, error), PCB_get_pc(current_node->value, error));
-			current_node = current_node->next_node;
-		}
+		printf("\nQ: Count = %d ", theList->size);
 	}
+	int i = 0;
+	for (i = 1; i <= temp_size; i++ ){
+		printf("P%d ->" ,i);
+	}
+	printf("\n");
 }
