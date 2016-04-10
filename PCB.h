@@ -1,6 +1,7 @@
 #pragma once
 
 #include "PCB_Errors.h"
+
 #define PCB_PRIORITY_MAX 15
 
 enum PCB_STATE_TYPE {
@@ -28,10 +29,12 @@ typedef struct PCB * PCB_p;
 PCB_p PCB_construct(enum PCB_ERROR*); // returns a pcb pointer to heap allocation
 void PCB_destruct(PCB_p, enum PCB_ERROR*);  // deallocates pcb from the heap
 void PCB_init(PCB_p, enum PCB_ERROR*);       // sets default values for member data
+
 void PCB_set_pid(PCB_p, unsigned long, enum PCB_ERROR*);///////
 void PCB_set_state(PCB_p, enum PCB_STATE_TYPE, enum PCB_ERROR*);
 void PCB_set_priority(PCB_p, unsigned short, enum PCB_ERROR*);
 void PCB_set_pc(PCB_p, unsigned long, enum PCB_ERROR*);
+
 unsigned long PCB_get_pid(PCB_p, enum PCB_ERROR*);  // returns pid of the process
 enum PCB_STATE_TYPE PCB_get_state(PCB_p, enum PCB_ERROR*);
 unsigned short PCB_get_priority(PCB_p, enum PCB_ERROR*);

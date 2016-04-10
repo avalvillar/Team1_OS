@@ -7,7 +7,7 @@ PCB_p PCB_construct(enum PCB_ERROR *error) {
 	void *memPtr = malloc(sizeof(struct PCB));
 	if (memPtr == NULL) {
 		*error = PCB_MEM_ALLOC_FAIL;
-		return memPtr;
+		return NULL;
 	} 
 	return memPtr;
 }
